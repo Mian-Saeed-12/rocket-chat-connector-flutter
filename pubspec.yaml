@@ -17,6 +17,8 @@ dependencies:
   #https://pub.dev/packages/web_socket_channel/changelog-tab-
   web_socket_channel: ^3.0.2
 
+  uuid:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

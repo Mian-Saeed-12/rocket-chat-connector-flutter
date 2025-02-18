@@ -5,6 +5,7 @@ import 'package:rocket_chat_connector_flutter/exceptions/exception.dart';
 import 'package:rocket_chat_connector_flutter/models/authentication.dart';
 import 'package:rocket_chat_connector_flutter/models/user.dart';
 import 'package:rocket_chat_connector_flutter/services/http_service.dart';
+import 'package:uuid/uuid.dart';
 
 class AuthenticationService {
   HttpService _httpService;
@@ -12,7 +13,14 @@ class AuthenticationService {
   AuthenticationService(this._httpService);
 
   Future<Authentication> login(String user, String password) async {
-    Map<String, String> body = {'user': user, 'password': password};
+    int timezoneOffset = DateTime.now().timeZoneOffset.inHours;
+    Map<String, dynamic> body = {
+      "username": user,
+      "password": password,
+      "tz-offset": timezoneOffset,
+      "app-id": Uuid().v4().toString()
+      // "code":,
+    };
     http.Response response = await _httpService.post(
       '/api/v1/login',
       jsonEncode(body),
