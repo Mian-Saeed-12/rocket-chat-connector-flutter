@@ -9,6 +9,7 @@ import 'package:rocket_chat_connector_flutter/models/authentication.dart';
 import 'package:rocket_chat_connector_flutter/models/user.dart';
 import 'package:rocket_chat_connector_flutter/services/authentication_service.dart';
 import 'package:rocket_chat_connector_flutter/services/http_service.dart';
+import 'package:uuid/uuid.dart';
 
 import '../scenarios/data/authentication_data.dart';
 import '../scenarios/data/user_data.dart';
@@ -30,7 +31,14 @@ void main() {
   });
 
   test('authentication success', () async {
-    Map<String, String> mappedBody = {'user': user, 'password': password};
+    int timezoneOffset = DateTime.now().timeZoneOffset.inHours;
+    Map<String, dynamic> mappedBody = {
+      "username": user,
+      "password": password,
+      "tz-offset": timezoneOffset,
+      "app-id": Uuid().v4().toString()
+      // "code":,
+    };
 
     Response response =
         Response(jsonEncode(AuthenticationData.getMapById(1)), 200);
